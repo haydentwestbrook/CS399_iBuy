@@ -2,6 +2,7 @@ package com.example.hayden.ibuy;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.NumberPicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -32,7 +34,9 @@ public class iBuy extends Activity {
         ListView yourListView = (ListView) findViewById(R.id.listView);
         ItemAdapter customAdapter = new ItemAdapter(this, R.layout.item_layout, items);
         yourListView .setAdapter(customAdapter);
-    }
+
+        Spinner ratingSpinner = (Spinner) findViewById(R.id.spinner);
+     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,6 +64,7 @@ public class iBuy extends Activity {
 
         private String label;
         private Integer quantity;
+        private Integer rating;
 
         public Item(String label, int quantity) {
             this.label = label;
@@ -120,6 +125,13 @@ public class iBuy extends Activity {
             }
 
             return v;
+        }
+        public void buttonAboutClicked(View v) {
+            startActivity(new Intent(getApplicationContext(), About.class));
+        }
+
+        public void buttonStartClicked(View v) {
+            startActivity(new Intent(getApplicationContext(), iBuy.class));
         }
     }
 }
