@@ -2,6 +2,7 @@ package com.example.hayden.ibuy;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.NumberPicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ public class iBuy extends Activity {
 
     private ArrayList<Item> items;
     private Integer current = 0;
+    private Integer points = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +52,15 @@ public class iBuy extends Activity {
     }
 
     void addItem() {
-        Item item = new Item(current++, "New Item", 1);
+        Item item = new Item(current++, "New Item", 1, 100);
         items.add(item);
+    }
+
+    void removeItem(Integer itemId) {
+        Item item = getItemById(itemId);
+        items.remove(item);
+
+        points += item.rank;
     }
 
     Item getItemById(int id) {
@@ -89,11 +99,13 @@ public class iBuy extends Activity {
         private String label;
         private Integer quantity;
         private Integer id;
+        private Integer rank;
 
-        public Item(Integer id, String label, int quantity) {
+        public Item(Integer id, String label, int quantity, int rank) {
             this.label = label;
             this.quantity = quantity;
             this.id = id;
+            this.rank = rank;
         }
 
         public String getLabel() {
@@ -109,6 +121,17 @@ public class iBuy extends Activity {
                 return 0;
             }
             return this.quantity;
+        }
+
+        public Integer getRank() {
+            if(rank == null) {
+                return 0;
+            }
+            return this.rank;
+        }
+
+        public void setRank(int rank) {
+            this.rank = rank;
         }
 
         public void incrementQuantity() {
@@ -146,6 +169,7 @@ public class iBuy extends Activity {
             if(item != null) {
                 TextView label = (TextView) v.findViewById(R.id.label);
                 TextView quantity = (TextView) v.findViewById((R.id.quantity));
+                TextView points = (TextView) v.findViewById(R.id.points);
 
                 if(label != null) {
                     label.setText(item.getLabel());
@@ -153,6 +177,10 @@ public class iBuy extends Activity {
 
                 if(quantity != null) {
                     quantity.setText(String.valueOf(item.getQuantity()));
+                }
+
+                if(points != null) {
+                    points.setText(String.valueOf(item.getRank()));
                 }
 
                 Button increment = (Button) v.findViewById(R.id.incrementQuantity);
@@ -186,8 +214,7 @@ public class iBuy extends Activity {
                 delete.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         Integer itemId = (Integer) v.getTag();
-                        Item item = getItemById(itemId);
-                        items.remove(item);
+                        removeItem(itemId);
 
                         ListView listView = (ListView) findViewById(R.id.listView);
                         ((ItemAdapter) listView.getAdapter()).notifyDataSetChanged();
@@ -196,6 +223,13 @@ public class iBuy extends Activity {
             }
 
             return v;
+        }
+        public void buttonAboutClicked(View v) {
+            startActivity(new Intent(getApplicationContext(), About.class));
+        }
+
+        public void buttonStartClicked(View v) {
+            startActivity(new Intent(getApplicationContext(), iBuy.class));
         }
     }
 }

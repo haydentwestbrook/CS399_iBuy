@@ -9,7 +9,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Item"
         android:id="@+id/label"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="20dp"
+        android:layout_alignBaseline="@+id/points"
+        android:layout_alignBottom="@+id/points"
+        android:layout_toEndOf="@+id/view"
+        android:layout_marginStart="12dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -54,13 +58,32 @@
 
     </LinearLayout>
 
+< android:id android:id="@+id/view" />="@+id/view" /><<<<<< HEAD
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="delete"
+        android:text="bought"
         android:id="@+id/delete"
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/linearLayout" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Points"
+        android:id="@+id/points"
+        android:layout_marginLeft="20dp"
+        android:layout_alignBaseline="@+id/delete"
+        android:layout_alignBottom="@+id/delete"
+        android:layout_toStartOf="@+id/delete"
+        android:layout_marginEnd="22dp" /><![CDATA[
+=======
+
+
+    >>>>>>> 3da77318d8a91cb6ec48c5fa430ae0fe69ed84ae
+
+
+]]>
 </RelativeLayout>
