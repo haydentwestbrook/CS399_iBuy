@@ -2,18 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="#3498db">
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"></TableLayout>
+        android:layout_gravity="center_horizontal">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Space
+                android:layout_width="20px"
+                android:layout_height="20px"
+                android:layout_column="13" />
+        </TableRow>
+    </TableLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="iBuy"
+        android:textColor="#fff"
         android:id="@+id/textView"
         android:layout_gravity="center_horizontal"
         android:textSize="30dp"
@@ -23,22 +41,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.50" />
+        android:layout_weight="0.60" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start"
         android:id="@+id/button"
+        android:textColor="#fff"
         android:layout_gravity="center_horizontal"
-        android:onClick="buttonStartClicked"/>
+        android:onClick="buttonStartClicked"
+        android:background="#34495e" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.07" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="About"
+        android:textColor="#fff"
         android:id="@+id/button2"
         android:layout_gravity="center_horizontal"
-        android:onClick="buttonAboutClicked"/>
+        android:onClick="buttonAboutClicked"
+        android:background="#34495e" />
 
 </LinearLayout>
