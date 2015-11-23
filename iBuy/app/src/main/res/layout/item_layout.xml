@@ -15,7 +15,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp" >
+        android:layout_marginRight="20dp"
+        android:id="@+id/linearLayout">
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -35,6 +36,14 @@
             android:layout_marginRight="10dp"
             android:layout_gravity="center" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="0"
+            android:id="@+id/itemId"
+            android:visibility="gone" />
+
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
@@ -44,5 +53,14 @@
             android:layout_gravity="top" />
 
     </LinearLayout>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="delete"
+        android:id="@+id/delete"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/linearLayout" />
 
 </RelativeLayout>

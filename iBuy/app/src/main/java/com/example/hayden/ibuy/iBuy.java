@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -18,20 +19,47 @@ import java.util.List;
 
 public class iBuy extends Activity {
 
+    private ArrayList<Item> items;
+    private Integer current = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_i_buy);
 
-        ArrayList<Item> items = new ArrayList<>();
+        items = new ArrayList<>();
 
-        items.add(new Item("Item 1", 1));
-        items.add(new Item("Item 2", 3));
-        items.add(new Item("Item 3", 2));
+        addItem();
+        addItem();
+        addItem();
 
         ListView yourListView = (ListView) findViewById(R.id.listView);
         ItemAdapter customAdapter = new ItemAdapter(this, R.layout.item_layout, items);
-        yourListView .setAdapter(customAdapter);
+        yourListView.setAdapter(customAdapter);
+
+        Button addItem = (Button) findViewById(R.id.addItem);
+        addItem.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                addItem();
+
+                ListView listView = (ListView) findViewById(R.id.listView);
+                ((ItemAdapter) listView.getAdapter()).notifyDataSetChanged();
+            }
+        });
+    }
+
+    void addItem() {
+        Item item = new Item(current++, "New Item", 1);
+        items.add(item);
+    }
+
+    Item getItemById(int id) {
+        for(Item item : items) {
+            if(item.id == id) {
+                return item;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -60,10 +88,12 @@ public class iBuy extends Activity {
 
         private String label;
         private Integer quantity;
+        private Integer id;
 
-        public Item(String label, int quantity) {
+        public Item(Integer id, String label, int quantity) {
             this.label = label;
             this.quantity = quantity;
+            this.id = id;
         }
 
         public String getLabel() {
@@ -74,12 +104,19 @@ public class iBuy extends Activity {
             this.label = label;
         }
 
-        public String getQuantity() {
-            return this.quantity.toString();
+        public Integer getQuantity() {
+            if(quantity == null) {
+                return 0;
+            }
+            return this.quantity;
         }
 
-        public void setQuantity(int quantity) {
-            this.quantity = quantity;
+        public void incrementQuantity() {
+            this.quantity++;
+        }
+
+        public void decrementQuantity() {
+            this.quantity--;
         }
     }
 
@@ -115,8 +152,47 @@ public class iBuy extends Activity {
                 }
 
                 if(quantity != null) {
-                    quantity.setText(item.getQuantity());
+                    quantity.setText(String.valueOf(item.getQuantity()));
                 }
+
+                Button increment = (Button) v.findViewById(R.id.incrementQuantity);
+                increment.setTag(position);
+                increment.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Integer itemId = (Integer) v.getTag();
+                        Item item = getItemById(itemId);
+                        item.incrementQuantity();
+
+                        ListView listView = (ListView) findViewById(R.id.listView);
+                        ((ItemAdapter) listView.getAdapter()).notifyDataSetChanged();
+                    }
+                });
+
+                Button decrement = (Button) v.findViewById(R.id.decrementQuantity);
+                decrement.setTag(position);
+                decrement.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Integer itemId = (Integer) v.getTag();
+                        Item item = getItemById(itemId);
+                        item.decrementQuantity();
+
+                        ListView listView = (ListView) findViewById(R.id.listView);
+                        ((ItemAdapter) listView.getAdapter()).notifyDataSetChanged();
+                    }
+                });
+
+                Button delete = (Button) v.findViewById(R.id.delete);
+                delete.setTag(position);
+                delete.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Integer itemId = (Integer) v.getTag();
+                        Item item = getItemById(itemId);
+                        items.remove(item);
+
+                        ListView listView = (ListView) findViewById(R.id.listView);
+                        ((ItemAdapter) listView.getAdapter()).notifyDataSetChanged();
+                    }
+                });
             }
 
             return v;
