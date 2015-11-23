@@ -19,7 +19,7 @@ public class About extends Activity {
     }
 
     public void buttonHomeClicked(View v) {
-        startActivity(new Intent(getApplicationContext(), iBuy.class));
+        startActivity(new Intent(getApplicationContext(), Home.class));
     }
 
     @Override

@@ -1,7 +1,9 @@
 package com.example.hayden.ibuy;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
@@ -32,10 +35,6 @@ public class iBuy extends Activity {
 
         items = new ArrayList<>();
 
-        addItem();
-        addItem();
-        addItem();
-
         ListView yourListView = (ListView) findViewById(R.id.listView);
         ItemAdapter customAdapter = new ItemAdapter(this, R.layout.item_layout, items);
         yourListView.setAdapter(customAdapter);
@@ -43,16 +42,13 @@ public class iBuy extends Activity {
         Button addItem = (Button) findViewById(R.id.addItem);
         addItem.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                addItem();
-
-                ListView listView = (ListView) findViewById(R.id.listView);
-                ((ItemAdapter) listView.getAdapter()).notifyDataSetChanged();
+                addItemAlert();
             }
         });
     }
 
-    void addItem() {
-        Item item = new Item(current++, "New Item", 1, 100);
+    void addItem(String label, int quantity, int points) {
+        Item item = new Item(current++, label, quantity, points);
         items.add(item);
     }
 
@@ -61,6 +57,33 @@ public class iBuy extends Activity {
         items.remove(item);
 
         points += item.rank;
+    }
+
+    void addItemAlert() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("New Item");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                addItem(input.getText().toString(), 1, 100);
+
+                ListView listView = (ListView) findViewById(R.id.listView);
+                ((ItemAdapter) listView.getAdapter()).notifyDataSetChanged();
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
     }
 
     Item getItemById(int id) {
